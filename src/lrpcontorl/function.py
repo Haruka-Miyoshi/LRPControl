@@ -21,8 +21,8 @@ class LRPControl(object):
         self.__lr=1e-3
         # 損失関数:最小二乗法
         self.__loss_func=nn.MSELoss()
-        # 最適化アルゴリズム:SGD
-        self.__opt=torch.optim.SGD(self.__model.parameters(), lr=self.__lr)
+        # 最適化アルゴリズム:Adam
+        self.__opt=torch.optim.Adam(self.__model.parameters(), lr=self.__lr)
 
         # save file path
         self.FILE_PATH=os.path.join('./model')
@@ -32,19 +32,19 @@ class LRPControl(object):
             os.mkdir(self.FILE_PATH)
 
     """fit:フィッティング処理"""
-    def fit(self, X, Y, mode=False):
+    def fit(self, X, Y, mode=False, epoch=1000):
         # 損失を格納変数
-        losses=torch.zeros(100)
+        losses=torch.zeros(epoch)
         X=X.to(device=self.__device)
         Y=Y.to(device=self.__device)
 
-        for e in range(100):
+        for e in range(epoch):
             sum_loss=0.0
             for x, y in zip(X,Y):
                 # 予測
                 y_hat=self.__model(x.float())
                 # 損失計算
-                loss=self.__loss_func(y_hat, y.float())
+                loss=self.__loss_func(torch.abs(y.float()), y_hat)
                 
                 # 勾配を初期化
                 self.__opt.zero_grad()

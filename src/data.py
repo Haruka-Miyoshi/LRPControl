@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 # 台車の初期位置と目標位置
-start_pos = np.array([-10.0, -10.0])
-target_pos = np.array([20.0, 20.0])
+start_pos = np.array([-50.0, -50.0])
+target_pos = np.array([50.0, 50.0])
 velocity = np.array([0.0, 0.0])
 
 # 制御ゲイン
@@ -16,8 +16,11 @@ eps = np.array(1.0)
 
 # アニメーションの設定
 fig, ax = plt.subplots()
-ax.set_xlim(-30, 30)
-ax.set_ylim(-30, 30)
+ax.set_title('LRPControl Data')
+ax.set_xlabel('Postions X')
+ax.set_ylabel('Postions Y')
+ax.set_xlim(-100, 100)
+ax.set_ylim(-100, 100)
 line, = ax.plot([], [], 'ro', markersize=10)
 
 # 速度系列
@@ -44,8 +47,6 @@ def update(frame):
     # 台車とライダーの位置をプロット
     line.set_data([start_pos[0]], [start_pos[1]])
 
-    print(np.allclose(start_pos, target_pos))
-
     # 目標位置に到達したらアニメーションを停止
     if np.allclose(start_pos, target_pos):
         ani.event_source.stop()
@@ -57,13 +58,11 @@ def update(frame):
 
 # アニメーションの作成
 ani = FuncAnimation(fig, update, frames=np.arange(100), init_func=init, interval=100, blit=True)
-
+ani.save('./figs/data_action.gif', writer='imagemagick')
 # アスペクト比の調整
 ax.set_aspect('equal')
-
 # アニメーションの表示
-plt.show()
-
+# plt.show()
 if not os.path.exists('./data'):
     os.mkdir('./data')
 
