@@ -4,9 +4,7 @@ class Model(nn.Module):
     def __init__(self, i_dim, o_dim):
         super(Model, self).__init__()
         self.__linear=nn.Sequential(
-        nn.ReLU(True),
-        nn.Linear(i_dim, o_dim),
-        nn.ReLU(True)
+        nn.Linear(i_dim, o_dim)
         )
     
     def forward(self, x):
