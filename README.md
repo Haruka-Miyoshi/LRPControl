@@ -20,6 +20,11 @@
 
     $ v'= model(error) $
 
+### **データ**
+* 実際に比例制御で動作させたデータを使用する．
+
+![Animation](./src/figs/data_action.gif.gif)
+
 ### **デモ**
 
 ![Animation](./src/figs/pred_action1.gif)
@@ -27,5 +32,6 @@
 ![Animation](./src/figs/pred_action2.gif)
 
 ### **感想**
+* 負の値（負の座標）を考慮したデータを入れると，学習できない．
 * あまり，良い手法だとは思えない．
 * しかし，本質はerrorが小さくなるほど，速度も小さくするというのが本質で，当たり前だけど，線形回帰すれば，とりあえず解ける．
