@@ -32,7 +32,7 @@ class LRPControl(object):
             os.mkdir(self.FILE_PATH)
 
     """fit:フィッティング処理"""
-    def fit(self, X, Y, mode=False, epoch=1000):
+    def fit(self, X, Y, mode=False, epoch=100):
         # 損失を格納変数
         losses=torch.zeros(epoch)
         X=X.to(device=self.__device)
